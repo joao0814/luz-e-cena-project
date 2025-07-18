@@ -1,85 +1,29 @@
-import type { Movie } from "../../types/index.tsx";
+import { useEffect, useState } from "react";
 import Button from "../Button/index.tsx";
 import Fieldset from "../Fieldset";
 import InputText from "../InputText.tsx";
 import MovieList from "../MovieList/index.tsx";
 import styles from "./MovieSection.module.css";
 import { FaSearch } from "react-icons/fa";
-
-const movies: Movie[] = [
-  {
-    id: 1,
-    src: "/Cards/Card - Amigo da sombra.png",
-    alt: "Imagem do filme Amigo da sombra",
-    titulo: "Amigo da sombra",
-    categoria: "2D",
-    censura: "12 anos",
-    genero: "Suspense",
-    duracao: "110",
-  },
-  {
-    id: 2,
-    src: "/Cards/Card - Amigos do bosque mágico.png",
-    alt: "Imagem do filme Amigo do bosque mágico",
-    titulo: "Amigo do bosque mágico",
-    categoria: "2D",
-    censura: "Livre",
-    genero: "Animação",
-    duracao: "60",
-  },
-  {
-    id: 3,
-    src: "/Cards/Card - Caminho para o abismo.png",
-    alt: "Imagem do filme Caminho para o abismo",
-    titulo: "Caminho para o abismo",
-    categoria: "2D",
-    censura: "14 anos",
-    genero: "Horror",
-    duracao: "103",
-  },
-  {
-    id: 4,
-    src: "/Cards/Card - Desastres do Escritório.png",
-    alt: "Imagem do filme Desastres do Escritório",
-    titulo: "Desastres do Escritório",
-    categoria: "2D",
-    censura: "Livre",
-    genero: "Comédia",
-    duracao: "85",
-  },
-  {
-    id: 5,
-    src: "/Cards/Card - Mestres do futuro.png",
-    alt: "Imagem do filme Mestres do Futuro",
-    titulo: "Mestres do Futuro",
-    categoria: "2D",
-    censura: "Livre",
-    genero: "Documentário",
-    duracao: "120",
-  },
-  {
-    id: 6,
-    src: "/Cards/Card - La Esperanza.png",
-    alt: "Imagem do filme La Esperanza",
-    titulo: "La Esperanza",
-    categoria: "2D",
-    censura: "12 anos",
-    genero: "Drama",
-    duracao: "98",
-  },
-  {
-    id: 7,
-    src: "/Cards/Card - O nexus do tempo.png",
-    alt: "Imagem do filme O nexus do tempo",
-    titulo: "O nexus do tempo",
-    categoria: "3D",
-    censura: "10 anos",
-    genero: "Ficcção Científica",
-    duracao: "105",
-  },
-];
+import { getMovies } from "../../api/index.tsx";
+import type { Movie } from "../../types/index.tsx";
 
 const MovieSection = () => {
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  const fetchMovies = async () => {
+    try {
+      const movies = await getMovies();
+      setMovies(movies);
+    } catch (err) {
+      console.error("Failed to fetch movies:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchMovies();
+  });
+
   return (
     <main className={styles.container}>
       <Fieldset variant="secondary">
