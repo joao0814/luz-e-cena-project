@@ -1,4 +1,4 @@
-const Logo = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+const Logo = ({ ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => {
   return <img {...props} />;
 };
 
